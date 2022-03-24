@@ -5,7 +5,7 @@
 ## 2. Connect project with github
 
 ## 3. Create main page with list of products
-Read all products from contentful and display them.
+Read all products from contentful and display them - query (localhost:8000/__graphql)
 
 ## 4. Create a template for each indivual product (product page)
 
