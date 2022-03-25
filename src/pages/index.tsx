@@ -3,7 +3,6 @@ import { graphql, Link } from "gatsby"
 
 // markup
 const IndexPage = ({ data }: any) => {
-  console.log(data)
   return (
   <>
     <h1>Hello world</h1>

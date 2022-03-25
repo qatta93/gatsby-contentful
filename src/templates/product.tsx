@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { graphql } from 'gatsby';
 
 
 const ProductTemplate = ({ data }: any) => {
-  console.log(data);
   const product = data.contentfulProduct;
+
+  useEffect(() => {
+    const fetchQuantity = async () => {
+      const data = await fetch('/.netlify/functions/productQuantity')
+      const message = await data.json();
+      console.log(message);
+    }
+    fetchQuantity();
+  }, []) 
+
+  
+
   return (
     <div>
       <h2>{product.name}</h2>
