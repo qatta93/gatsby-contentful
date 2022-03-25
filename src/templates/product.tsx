@@ -1,20 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
 
 
 const ProductTemplate = ({ data }: any) => {
+  const [quantity, setQuantity] = useState(0);
   const product = data.contentfulProduct;
 
   useEffect(() => {
     const fetchQuantity = async () => {
-      const data = await fetch('/.netlify/functions/productQuantity')
-      const message = await data.json();
-      console.log(message);
+      const response = await fetch('/.netlify/functions/productQuantity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: product.slug
+        })
+      })
+      const data = await response.json();
+      setQuantity(data.quantity);
     }
     fetchQuantity();
-  }, []) 
-
-  
+  }, [])
 
   return (
     <div>
@@ -22,6 +29,7 @@ const ProductTemplate = ({ data }: any) => {
       <p>{product.category}</p>
       <p>{product.description.description}</p>
       <p>{product.price}</p>
+      <p>{quantity}</p>
     </div>
   )
 }
@@ -36,6 +44,7 @@ export const query = graphql`
       category
       price
       name
+      slug
     }
   }
 `
